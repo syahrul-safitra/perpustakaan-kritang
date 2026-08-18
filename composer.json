@@ -8,6 +8,7 @@
         "php": "^8.1",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
+        "barryvdh/laravel-dompdf": "^3.1.0",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8"
     },
@@ -59,6 +60,10 @@
         "allow-plugins": {
             "pestphp/pest-plugin": true,
             "php-http/discovery": true
+        },
+        "audit": { "block": false },
+        "platform": {
+            "php": "8.2.0"
         }
     },
     "minimum-stability": "stable",

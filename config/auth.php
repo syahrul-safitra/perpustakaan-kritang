@@ -35,10 +35,23 @@ return [
     |
     */
 
+    // 'guards' => [
+    //     'web' => [
+    //         'driver' => 'session',
+    //         'provider' => 'users',
+    //     ],
+    // ],
+
     'guards' => [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
+        ],
+
+        // Guard khusus Anggota (Siswa / Guru)
+        'anggota' => [
+            'driver' => 'session',
+            'provider' => 'anggotas',
         ],
     ],
 
@@ -60,15 +73,21 @@ return [
     */
 
     'providers' => [
+        // 'users' => [
+        //     'driver' => 'eloquent',
+        //     'model' => App\Models\User::class,
+        // ],
+
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Models\User::class, // <-- Arahkan ke model Pustakawan
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        // Provider mengambil data dari model Anggota
+        'anggotas' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Anggota::class,
+        ],
     ],
 
     /*
