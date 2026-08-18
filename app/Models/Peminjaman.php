@@ -14,11 +14,11 @@ class Peminjaman extends Model
     protected $table = 'peminjaman';
 
     protected $fillable = [
-        'kode_transaksi', 'anggota_id', 'user_id', 'tanggal_pinjam',
+        'kode_transaksi', 'anggota_id', 'pustakawan_id', 'tanggal_pinjam',
         'tanggal_harus_kembali', 'tanggal_kembali', 'status', 'total_denda'
     ];
 
-    public const TARIF_DENDA_PER_HARI = 1000;
+    public const TARIF_DENDA_PER_HARI = 2000;
 
     public function anggota()
     {

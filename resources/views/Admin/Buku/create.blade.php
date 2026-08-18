@@ -1,9 +1,9 @@
-@extends('Admin.Layouts.main')
+{{-- @extends('Admin.Layouts.main')
 
-@section('title', 'Tambah Buku Baru - Admin Perpustakaan')
-@section('breadcrumb_active', 'Tambah Buku')
+@section("title", "Tambah Buku Baru - Admin Perpustakaan")
+@section("breadcrumb_active", "Tambah Buku")
 
-@section('content')
+@section("content")
 <!-- Page Header -->
 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
     <div>
@@ -53,7 +53,7 @@
                 <!-- Native Input Styled -->
                 <div class="w-full mt-4">
                     <input type="file" name="cover" id="cover_input" accept="image/*" class="file-input file-input-sm file-input-bordered file-input-primary w-full rounded-xl bg-base-200/30 text-xs" onchange="previewImage(event)" />
-                    @error('cover')
+                    @error("cover")
                         <span class="text-[11px] text-error mt-1 block">{{ $message }}</span>
                     @enderror
                 </div>
@@ -78,8 +78,8 @@
                         <label class="label py-1">
                             <span class="label-text font-semibold text-xs text-base-content/70">Judul Buku <span class="text-error">*</span></span>
                         </label>
-                        <input type="text" name="judul" value="{{ old('judul') }}" placeholder="Masukkan judul buku lengkap" class="input input-sm input-bordered rounded-xl bg-base-200/30 focus:bg-base-100 text-xs @error('judul') input-error @enderror" required />
-                        @error('judul')
+                        <input type="text" name="judul" value="{{ old('judul') }}" placeholder="Masukkan judul buku lengkap" class="input input-sm input-bordered rounded-xl bg-base-200/30 focus:bg-base-100 text-xs @error("judul") input-error @enderror" required />
+                        @error("judul")
                             <span class="text-[11px] text-error mt-1">{{ $message }}</span>
                         @enderror
                     </div>
@@ -91,8 +91,8 @@
                             <label class="label py-1">
                                 <span class="label-text font-semibold text-xs text-base-content/70">Nomor ISBN</span>
                             </label>
-                            <input type="text" name="isbn" value="{{ old('isbn') }}" placeholder="978-602-xxxx-xx-x" class="input input-sm input-bordered rounded-xl bg-base-200/30 focus:bg-base-100 text-xs font-mono @error('isbn') input-error @enderror" />
-                            @error('isbn')
+                            <input type="text" name="isbn" value="{{ old('isbn') }}" placeholder="978-602-xxxx-xx-x" class="input input-sm input-bordered rounded-xl bg-base-200/30 focus:bg-base-100 text-xs font-mono @error("isbn") input-error @enderror" />
+                            @error("isbn")
                                 <span class="text-[11px] text-error mt-1">{{ $message }}</span>
                             @enderror
                         </div>
@@ -102,7 +102,7 @@
                             <label class="label py-1">
                                 <span class="label-text font-semibold text-xs text-base-content/70">Kategori Buku <span class="text-error">*</span></span>
                             </label>
-                            <select name="kategori_id" class="select select-sm select-bordered rounded-xl bg-base-200/30 focus:bg-base-100 text-xs @error('kategori_id') select-error @enderror" required>
+                            <select name="kategori_id" class="select select-sm select-bordered rounded-xl bg-base-200/30 focus:bg-base-100 text-xs @error("kategori_id") select-error @enderror" required>
                                 <option value="" disabled selected>-- Pilih Kategori --</option>
                                 @foreach ($kategoriList ?? [] as $kat)
                                     <option value="{{ $kat->id }}" {{ old('kategori_id') == $kat->id ? 'selected' : '' }}>
@@ -110,7 +110,7 @@
                                     </option>
                                 @endforeach
                             </select>
-                            @error('kategori_id')
+                            @error("kategori_id")
                                 <span class="text-[11px] text-error mt-1">{{ $message }}</span>
                             @enderror
                         </div>
@@ -123,8 +123,8 @@
                             <label class="label py-1">
                                 <span class="label-text font-semibold text-xs text-base-content/70">Pengarang / Penulis <span class="text-error">*</span></span>
                             </label>
-                            <input type="text" name="pengarang" value="{{ old('pengarang') }}" placeholder="Nama pengarang" class="input input-sm input-bordered rounded-xl bg-base-200/30 focus:bg-base-100 text-xs @error('pengarang') input-error @enderror" required />
-                            @error('pengarang')
+                            <input type="text" name="pengarang" value="{{ old('pengarang') }}" placeholder="Nama pengarang" class="input input-sm input-bordered rounded-xl bg-base-200/30 focus:bg-base-100 text-xs @error("pengarang") input-error @enderror" required />
+                            @error("pengarang")
                                 <span class="text-[11px] text-error mt-1">{{ $message }}</span>
                             @enderror
                         </div>
@@ -134,8 +134,8 @@
                             <label class="label py-1">
                                 <span class="label-text font-semibold text-xs text-base-content/70">Penerbit <span class="text-error">*</span></span>
                             </label>
-                            <input type="text" name="penerbit" value="{{ old('penerbit') }}" placeholder="Nama penerbit" class="input input-sm input-bordered rounded-xl bg-base-200/30 focus:bg-base-100 text-xs @error('penerbit') input-error @enderror" required />
-                            @error('penerbit')
+                            <input type="text" name="penerbit" value="{{ old('penerbit') }}" placeholder="Nama penerbit" class="input input-sm input-bordered rounded-xl bg-base-200/30 focus:bg-base-100 text-xs @error("penerbit") input-error @enderror" required />
+                            @error("penerbit")
                                 <span class="text-[11px] text-error mt-1">{{ $message }}</span>
                             @enderror
                         </div>
@@ -158,8 +158,8 @@
                         <label class="label py-1">
                             <span class="label-text font-semibold text-xs text-base-content/70">Tahun Terbit <span class="text-error">*</span></span>
                         </label>
-                        <input type="number" name="tahun_terbit" value="{{ old('tahun_terbit', date('Y')) }}" min="1900" max="{{ date('Y') }}" class="input input-sm input-bordered rounded-xl bg-base-200/30 focus:bg-base-100 text-xs @error('tahun_terbit') input-error @enderror" required />
-                        @error('tahun_terbit')
+                        <input type="number" name="tahun_terbit" value="{{ old('tahun_terbit', date('Y')) }}" min="1900" max="{{ date('Y') }}" class="input input-sm input-bordered rounded-xl bg-base-200/30 focus:bg-base-100 text-xs @error("tahun_terbit") input-error @enderror" required />
+                        @error("tahun_terbit")
                             <span class="text-[11px] text-error mt-1">{{ $message }}</span>
                         @enderror
                     </div>
@@ -169,8 +169,8 @@
                         <label class="label py-1">
                             <span class="label-text font-semibold text-xs text-base-content/70">Jumlah Stok <span class="text-error">*</span></span>
                         </label>
-                        <input type="number" name="stok" value="{{ old('stok', 1) }}" min="0" class="input input-sm input-bordered rounded-xl bg-base-200/30 focus:bg-base-100 text-xs @error('stok') input-error @enderror" required />
-                        @error('stok')
+                        <input type="number" name="stok" value="{{ old('stok', 1) }}" min="0" class="input input-sm input-bordered rounded-xl bg-base-200/30 focus:bg-base-100 text-xs @error("stok") input-error @enderror" required />
+                        @error("stok")
                             <span class="text-[11px] text-error mt-1">{{ $message }}</span>
                         @enderror
                     </div>
@@ -180,8 +180,8 @@
                         <label class="label py-1">
                             <span class="label-text font-semibold text-xs text-base-content/70">Lokasi Rak <span class="text-error">*</span></span>
                         </label>
-                        <input type="text" name="lokasi_rak" value="{{ old('lokasi_rak') }}" placeholder="Misal: Rak A-01" class="input input-sm input-bordered rounded-xl bg-base-200/30 focus:bg-base-100 text-xs uppercase @error('lokasi_rak') input-error @enderror" required />
-                        @error('lokasi_rak')
+                        <input type="text" name="lokasi_rak" value="{{ old('lokasi_rak') }}" placeholder="Misal: Rak A-01" class="input input-sm input-bordered rounded-xl bg-base-200/30 focus:bg-base-100 text-xs uppercase @error("lokasi_rak") input-error @enderror" required />
+                        @error("lokasi_rak")
                             <span class="text-[11px] text-error mt-1">{{ $message }}</span>
                         @enderror
                     </div>
@@ -203,7 +203,7 @@
     </div>
 </form>
 
-@push('scripts')
+@push("scripts")
 <script>
     function previewImage(event) {
         const reader = new FileReader();
@@ -224,4 +224,256 @@
     }
 </script>
 @endpush
+@endsection --}}
+
+@extends("Admin.Layouts.main")
+
+@section("title", "Tambah Buku Baru - E-Perpus SMAN 1 Keritang")
+@section("page_heading", "Tambah Buku Baru")
+
+@section("content")
+    <div class="space-y-6">
+
+        <!-- Page Header & Action Back -->
+        <div
+            class="flex flex-col justify-between gap-4 rounded-3xl border border-slate-100 bg-white p-5 shadow-sm sm:flex-row sm:items-center">
+            <div>
+                <h1 class="text-base font-bold tracking-tight text-slate-800">Tambah Koleksi Buku Baru</h1>
+                <p class="mt-0.5 text-xs text-slate-400">Isi formulir berikut untuk menambahkan koleksi buku perpustakaan
+                    SMAN 1 Keritang.</p>
+            </div>
+            <div>
+                <a href="{{ url("admin/buku") }}"
+                    class="btn btn-sm gap-2 rounded-xl border-none bg-slate-100 text-xs font-bold text-slate-700 transition-colors hover:bg-slate-200">
+                    <i class="fa-solid fa-arrow-left text-xs"></i> Kembali
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Form Container -->
+        <form action="{{ url("admin/buku") }}" method="POST" enctype="multipart/form-data">
+            @csrf
+
+            <div class="grid grid-cols-1 items-start gap-6 lg:grid-cols-12">
+
+                <!-- Left Side: Cover Uploader Card (4 Cols) -->
+                <div class="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm lg:col-span-4">
+                    <h2
+                        class="mb-4 flex items-center gap-2 border-b border-slate-100 pb-3 text-xs font-bold uppercase tracking-wider text-slate-400">
+                        <i class="fa-solid fa-image text-emerald-600"></i> Sampul / Cover Buku
+                    </h2>
+
+                    <div class="flex flex-col items-center">
+                        <!-- Dropzone Box -->
+                        <div
+                            class="group relative flex h-72 w-full flex-col items-center justify-center overflow-hidden rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 transition-all hover:border-emerald-500/50">
+                            <img id="cover_preview" class="hidden h-full w-full object-cover" alt="Preview Cover" />
+
+                            <div id="upload_placeholder" class="flex flex-col items-center p-4 text-center">
+                                <div
+                                    class="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600 shadow-sm">
+                                    <i class="fa-solid fa-cloud-arrow-up text-xl"></i>
+                                </div>
+                                <span class="text-xs font-bold text-slate-700">Upload Sampul Buku</span>
+                                <span class="mt-1 text-[10px] text-slate-400">Format: JPG, PNG (Maks. 2MB)</span>
+                            </div>
+                        </div>
+
+                        <!-- Native Input Styled -->
+                        <div class="mt-4 flex w-full flex-col gap-1">
+                            <input type="file" name="cover" id="cover_input" accept="image/*"
+                                class="file-input file-input-sm file-input-bordered w-full rounded-xl text-xs focus:border-emerald-500 focus:outline-none"
+                                onchange="previewImage(event)" />
+                            @error("cover")
+                                <span class="mt-0.5 text-[10px] font-semibold text-rose-500"><i
+                                        class="fa-solid fa-circle-exclamation"></i> {{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side: Form Content Card (8 Cols) -->
+                <div class="space-y-6 lg:col-span-8">
+
+                    <!-- Section 1: Informasi Utama Buku -->
+                    <div class="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
+                        <h2
+                            class="mb-5 flex items-center gap-2 border-b border-slate-100 pb-3 text-xs font-bold uppercase tracking-wider text-slate-400">
+                            <i class="fa-solid fa-book-open text-emerald-600"></i> Informasi Utama
+                        </h2>
+
+                        <div class="space-y-4">
+                            <!-- Judul Buku -->
+                            <div class="flex flex-col gap-1">
+                                <label class="text-xs font-bold text-slate-700">Judul Buku <span
+                                        class="text-rose-500">*</span></label>
+                                <input type="text" name="judul" value="{{ old("judul") }}"
+                                    placeholder="Masukkan judul buku lengkap"
+                                    class="input input-sm input-bordered @error("judul") input-error border-rose-500 @enderror w-full rounded-xl text-xs focus:border-emerald-500 focus:outline-none"
+                                    required />
+                                @error("judul")
+                                    <span class="mt-0.5 text-[10px] font-semibold text-rose-500"><i
+                                            class="fa-solid fa-circle-exclamation"></i> {{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <!-- ISBN & Kategori Grid -->
+                            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                <!-- ISBN -->
+                                <div class="flex flex-col gap-1">
+                                    <label class="text-xs font-bold text-slate-700">Nomor ISBN</label>
+                                    <input type="text" name="isbn" value="{{ old("isbn") }}"
+                                        placeholder="978-602-xxxx-xx-x"
+                                        class="input input-sm input-bordered @error("isbn") input-error border-rose-500 @enderror w-full rounded-xl font-mono text-xs focus:border-emerald-500 focus:outline-none" />
+                                    @error("isbn")
+                                        <span class="mt-0.5 text-[10px] font-semibold text-rose-500"><i
+                                                class="fa-solid fa-circle-exclamation"></i> {{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <!-- Kategori -->
+                                <div class="flex flex-col gap-1">
+                                    <label class="text-xs font-bold text-slate-700">Kategori Buku <span
+                                            class="text-rose-500">*</span></label>
+                                    <select name="kategori_id"
+                                        class="select select-sm select-bordered @error("kategori_id") select-error border-rose-500 @enderror w-full rounded-xl text-xs focus:border-emerald-500 focus:outline-none"
+                                        required>
+                                        <option value="" disabled selected>-- Pilih Kategori --</option>
+                                        @foreach ($kategoriList ?? ($kategoris ?? []) as $kat)
+                                            <option value="{{ $kat->id }}"
+                                                {{ old("kategori_id") == $kat->id ? "selected" : "" }}>
+                                                {{ $kat->nama_kategori }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error("kategori_id")
+                                        <span class="mt-0.5 text-[10px] font-semibold text-rose-500"><i
+                                                class="fa-solid fa-circle-exclamation"></i> {{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <!-- Pengarang & Penerbit Grid -->
+                            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                <!-- Pengarang -->
+                                <div class="flex flex-col gap-1">
+                                    <label class="text-xs font-bold text-slate-700">Pengarang / Penulis <span
+                                            class="text-rose-500">*</span></label>
+                                    <input type="text" name="pengarang" value="{{ old("pengarang") }}"
+                                        placeholder="Nama pengarang"
+                                        class="input input-sm input-bordered @error("pengarang") input-error border-rose-500 @enderror w-full rounded-xl text-xs focus:border-emerald-500 focus:outline-none"
+                                        required />
+                                    @error("pengarang")
+                                        <span class="mt-0.5 text-[10px] font-semibold text-rose-500"><i
+                                                class="fa-solid fa-circle-exclamation"></i> {{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <!-- Penerbit -->
+                                <div class="flex flex-col gap-1">
+                                    <label class="text-xs font-bold text-slate-700">Penerbit <span
+                                            class="text-rose-500">*</span></label>
+                                    <input type="text" name="penerbit" value="{{ old("penerbit") }}"
+                                        placeholder="Nama penerbit"
+                                        class="input input-sm input-bordered @error("penerbit") input-error border-rose-500 @enderror w-full rounded-xl text-xs focus:border-emerald-500 focus:outline-none"
+                                        required />
+                                    @error("penerbit")
+                                        <span class="mt-0.5 text-[10px] font-semibold text-rose-500"><i
+                                                class="fa-solid fa-circle-exclamation"></i> {{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: Inventaris & Pengaturan Rak -->
+                    <div class="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
+                        <h2
+                            class="mb-5 flex items-center gap-2 border-b border-slate-100 pb-3 text-xs font-bold uppercase tracking-wider text-slate-400">
+                            <i class="fa-solid fa-boxes-stacked text-emerald-600"></i> Inventaris & Lokasi Rak
+                        </h2>
+
+                        <div class="space-y-4">
+                            <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                                <!-- Tahun Terbit -->
+                                <div class="flex flex-col gap-1">
+                                    <label class="text-xs font-bold text-slate-700">Tahun Terbit <span
+                                            class="text-rose-500">*</span></label>
+                                    <input type="number" name="tahun_terbit" value="{{ old("tahun_terbit", date("Y")) }}"
+                                        min="1900" max="{{ date("Y") }}"
+                                        class="input input-sm input-bordered @error("tahun_terbit") input-error border-rose-500 @enderror w-full rounded-xl font-mono text-xs focus:border-emerald-500 focus:outline-none"
+                                        required />
+                                    @error("tahun_terbit")
+                                        <span class="mt-0.5 text-[10px] font-semibold text-rose-500"><i
+                                                class="fa-solid fa-circle-exclamation"></i> {{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <!-- Stok -->
+                                <div class="flex flex-col gap-1">
+                                    <label class="text-xs font-bold text-slate-700">Jumlah Stok <span
+                                            class="text-rose-500">*</span></label>
+                                    <input type="number" name="stok" value="{{ old("stok", 1) }}" min="0"
+                                        class="input input-sm input-bordered @error("stok") input-error border-rose-500 @enderror w-full rounded-xl font-mono text-xs focus:border-emerald-500 focus:outline-none"
+                                        required />
+                                    @error("stok")
+                                        <span class="mt-0.5 text-[10px] font-semibold text-rose-500"><i
+                                                class="fa-solid fa-circle-exclamation"></i> {{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <!-- Lokasi Rak -->
+                                <div class="flex flex-col gap-1">
+                                    <label class="text-xs font-bold text-slate-700">Lokasi Rak <span
+                                            class="text-rose-500">*</span></label>
+                                    <input type="text" name="lokasi_rak" value="{{ old("lokasi_rak") }}"
+                                        placeholder="Misal: RAK A-01"
+                                        class="input input-sm input-bordered @error("lokasi_rak") input-error border-rose-500 @enderror w-full rounded-xl font-mono text-xs uppercase focus:border-emerald-500 focus:outline-none"
+                                        required />
+                                    @error("lokasi_rak")
+                                        <span class="mt-0.5 text-[10px] font-semibold text-rose-500"><i
+                                                class="fa-solid fa-circle-exclamation"></i> {{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Footer Action Buttons -->
+                        <div class="mt-6 flex items-center justify-end gap-3 border-t border-slate-100 pt-6">
+                            <a href="{{ url("admin/buku") }}"
+                                class="btn btn-ghost btn-sm rounded-xl text-xs text-slate-500">Batal</a>
+                            <button type="submit"
+                                class="btn btn-sm gap-2 rounded-xl border-none bg-emerald-600 px-6 text-xs font-bold text-white shadow-md shadow-emerald-600/20 hover:bg-emerald-700">
+                                <i class="fa-solid fa-check text-xs"></i> Simpan Buku
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+    @push("scripts")
+        <script>
+            function previewImage(event) {
+                const reader = new FileReader();
+                const imageField = document.getElementById('cover_preview');
+                const placeholder = document.getElementById('upload_placeholder');
+
+                reader.onload = function() {
+                    if (reader.readyState === 2) {
+                        imageField.src = reader.result;
+                        imageField.classList.remove('hidden');
+                        placeholder.classList.add('hidden');
+                    }
+                }
+
+                if (event.target.files[0]) {
+                    reader.readAsDataURL(event.target.files[0]);
+                }
+            }
+        </script>
+    @endpush
 @endsection

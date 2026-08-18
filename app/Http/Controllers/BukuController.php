@@ -32,9 +32,9 @@ class BukuController extends Controller
         $bukus = $query->latest()->paginate(10)->withQueryString();
         
         // Ambil daftar kategori untuk dropdown filter
-        $kategoriList = Kategori::orderBy('nama_kategori', 'asc')->get();
+        $kategoris = Kategori::orderBy('nama_kategori', 'asc')->get();
 
-        return view('Admin.Buku.index', compact('bukus', 'kategoriList'));
+        return view('Admin.Buku.index', compact('bukus', 'kategoris'));
     }
 
     /**
@@ -54,8 +54,8 @@ class BukuController extends Controller
         // 1. Validasi Input
         $validatedData = $request->validate([
             'judul'        => 'required|string|max:255',
-            'isbn'         => 'nullable|string|max:20|unique:bukus,isbn',
-            'kategori_id'  => 'required|exists:kategoris,id',
+            'isbn'         => 'nullable|string|max:20|unique:buku,isbn',
+            'kategori_id'  => 'required|exists:kategori,id',
             'pengarang'    => 'required|string|max:150',
             'penerbit'     => 'required|string|max:150',
             'tahun_terbit' => 'required|numeric|digits:4|max:' . date('Y'),
@@ -110,8 +110,8 @@ class BukuController extends Controller
         // 1. Validasi Input Update
         $validatedData = $request->validate([
             'judul'        => 'required|string|max:255',
-            'isbn'         => 'nullable|string|max:20|unique:bukus,isbn,' . $buku->id,
-            'kategori_id'  => 'required|exists:kategoris,id',
+            'isbn'         => 'nullable|string|max:20|unique:buku,isbn,' . $buku->id,
+            'kategori_id'  => 'required|exists:kategori,id',
             'pengarang'    => 'required|string|max:150',
             'penerbit'     => 'required|string|max:150',
             'tahun_terbit' => 'required|numeric|digits:4|max:' . date('Y'),

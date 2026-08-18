@@ -1,76 +1,134 @@
 <!DOCTYPE html>
-<html lang="id" data-theme="light">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Pustakawan - Perpustakaan</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body class="bg-base-200 min-h-screen flex items-center justify-center p-4">
+<html lang="id">
 
-    <div class="card w-full max-w-md bg-base-100/90 backdrop-blur-md border border-base-200/80 shadow-2xl rounded-3xl p-6 md:p-8">
-        
-        <!-- Header Branding -->
-        <div class="text-center mb-6">
-            <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 text-primary mb-3">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                </svg>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login Pustakawan — E-Perpus SMAN 1 Keritang</title>
+
+        <!-- FontAwesome 6 Free -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+        <!-- Vite Assets -->
+        @vite(["resources/css/app.css", "resources/js/app.js"])
+    </head>
+
+    <body
+        class="relative flex min-h-screen items-center justify-center overflow-hidden bg-slate-950 p-4 font-sans antialiased">
+
+        <!-- Background Image Sekolah dengan Overlay Blur -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=2000&auto=format&fit=crop"
+                alt="School Building Background"
+                class="contrast-110 h-full w-full scale-105 object-cover brightness-[0.38] filter transition-transform duration-1000" />
+            <div
+                class="absolute inset-0 bg-gradient-to-br from-slate-950/90 via-emerald-950/70 to-slate-900/85 backdrop-blur-[3px]">
             </div>
-            <h1 class="text-2xl font-black text-base-content tracking-tight">Login Pustakawan</h1>
-            <p class="text-xs text-base-content/60 mt-1">Sistem Informasi Perpustakaan SMAN 1 Keritang</p>
         </div>
 
-        <!-- Alert Error / Success -->
-        @if(session('success'))
-            <div class="alert alert-success text-xs text-white rounded-xl mb-4 p-3">
-                <span>{{ session('success') }}</span>
-            </div>
-        @endif
+        <!-- Ambient Glowing Blobs -->
+        <div class="pointer-events-none absolute -left-20 top-1/3 h-80 w-80 rounded-full bg-emerald-600/25 blur-3xl">
+        </div>
+        <div class="pointer-events-none absolute -right-20 bottom-1/3 h-96 w-96 rounded-full bg-teal-500/20 blur-3xl">
+        </div>
 
-        @if($errors->any())
-            <div class="alert alert-error text-xs text-white rounded-xl mb-4 p-3">
-                <span>{{ $errors->first() }}</span>
-            </div>
-        @endif
+        <!-- Main Glass Card Container -->
+        <div
+            class="relative z-10 w-full max-w-md space-y-6 rounded-3xl border border-white/40 bg-white/95 p-6 shadow-2xl shadow-emerald-950/60 backdrop-blur-2xl sm:p-8">
 
-        <!-- Form Login -->
-        <form action="{{ url('/admin/login') }}" method="POST" class="space-y-4">
-            @csrf
-
-            <div class="form-control">
-                <label class="label py-1">
-                    <span class="label-text text-xs font-semibold text-base-content/70">Alamat Email</span>
-                </label>
-                <input type="email" name="email" value="{{ old('email') }}" placeholder="pustakawan@sekolah.sch.id" class="input input-bordered input-md w-full rounded-xl text-xs focus:outline-none focus:border-primary @error('email') input-error @enderror" required autofocus />
+            <!-- Header Branding (Zen Code & Info Sekolah) -->
+            <div class="text-center">
+                <a href="{{ url("/katalog") }}" class="group mb-3 inline-flex items-center gap-2.5">
+                    <div
+                        class="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-700 text-base font-black tracking-wider text-white shadow-lg shadow-emerald-600/30 transition-transform group-hover:scale-105">
+                        ZC
+                    </div>
+                </a>
+                <h1 class="text-xl font-black tracking-tight text-slate-800">Login Pustakawan</h1>
+                <p class="mt-0.5 text-xs text-slate-400">Sistem Informasi Perpustakaan SMAN 1 Keritang</p>
             </div>
 
-            <div class="form-control">
-                <label class="label py-1">
-                    <span class="label-text text-xs font-semibold text-base-content/70">Password</span>
-                </label>
-                <input type="password" name="password" placeholder="••••••••" class="input input-bordered input-md w-full rounded-xl text-xs focus:outline-none focus:border-primary @error('password') input-error @enderror" required />
-            </div>
+            <!-- Alert Notification -->
+            @if (session("success"))
+                <div
+                    class="flex items-center gap-2.5 rounded-2xl border border-emerald-200/80 bg-emerald-50 p-3.5 text-xs font-semibold text-emerald-700">
+                    <i class="fa-solid fa-circle-check text-sm text-emerald-600"></i>
+                    <span>{{ session("success") }}</span>
+                </div>
+            @endif
 
-            <button type="submit" class="btn btn-primary btn-md w-full rounded-xl text-xs font-bold tracking-wide mt-2">
-                Masuk ke Dashboard
-            </button>
+            @if ($errors->any())
+                <div
+                    class="flex items-center gap-2.5 rounded-2xl border border-rose-200/80 bg-rose-50 p-3.5 text-xs font-semibold text-rose-600">
+                    <i class="fa-solid fa-triangle-exclamation text-sm text-rose-500"></i>
+                    <span>{{ $errors->first() }}</span>
+                </div>
+            @endif
 
-            <!-- Pembatas Navigasi Portal -->
-            <div class="divider text-[10px] text-base-content/40 uppercase my-3">Atau Masuk Sebagai</div>
+            <!-- Form Login -->
+            <form action="{{ url("/admin/login") }}" method="POST" class="space-y-4">
+                @csrf
 
-            <!-- Link Navigasi ke Portal Anggota -->
-            <div class="text-center space-y-2">
-                <a href="{{ url('/anggota/login') }}" class="btn btn-outline btn-secondary btn-sm w-full rounded-xl text-xs font-semibold gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
-                    Portal Login Anggota (Siswa / Guru)
+                <!-- Input Email -->
+                <div class="flex flex-col gap-1">
+                    <label class="text-xs font-bold text-slate-700">Alamat Email</label>
+                    <div class="relative">
+                        <span
+                            class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+                            <i class="fa-solid fa-envelope text-xs"></i>
+                        </span>
+                        <input type="email" name="email" value="{{ old("email") }}"
+                            placeholder="pustakawan@sekolah.sch.id"
+                            class="input input-sm input-bordered @error("email") border-rose-500 @enderror w-full rounded-xl border-slate-200 bg-slate-50/80 pl-9 text-xs font-medium text-slate-700 transition-all focus:border-emerald-500 focus:bg-white focus:outline-none"
+                            required autofocus />
+                    </div>
+                </div>
+
+                <!-- Input Password -->
+                <div class="flex flex-col gap-1">
+                    <label class="text-xs font-bold text-slate-700">Password</label>
+                    <div class="relative">
+                        <span
+                            class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+                            <i class="fa-solid fa-lock text-xs"></i>
+                        </span>
+                        <input type="password" name="password" placeholder="••••••••"
+                            class="input input-sm input-bordered @error("password") border-rose-500 @enderror w-full rounded-xl border-slate-200 bg-slate-50/80 pl-9 text-xs font-medium text-slate-700 transition-all focus:border-emerald-500 focus:bg-white focus:outline-none"
+                            required />
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit"
+                    class="btn btn-sm mt-2 h-10 w-full gap-2 rounded-xl border-none bg-emerald-600 text-xs font-bold text-white shadow-md shadow-emerald-600/30 hover:bg-emerald-700">
+                    <i class="fa-solid fa-right-to-bracket text-xs"></i> Masuk ke Dashboard
+                </button>
+
+                <!-- Divider -->
+                <div class="relative flex items-center py-2">
+                    <div class="flex-grow border-t border-slate-200"></div>
+                    <span class="mx-3 flex-shrink text-[10px] font-bold uppercase tracking-wider text-slate-400">Atau
+                        Masuk Sebagai</span>
+                    <div class="flex-grow border-t border-slate-200"></div>
+                </div>
+
+                <!-- Link Navigasi Portal Anggota -->
+                <a href="{{ url("/anggota/login") }}"
+                    class="btn btn-sm btn-ghost h-10 w-full gap-2 rounded-xl border border-slate-200/80 text-xs font-bold text-slate-700 hover:bg-slate-100">
+                    <i class="fa-solid fa-id-card text-xs text-emerald-600"></i> Portal Login Anggota (Siswa / Guru)
+                </a>
+            </form>
+
+            <!-- Footer Back Link -->
+            <div class="pt-2 text-center">
+                <a href="{{ url("/katalog") }}"
+                    class="inline-flex items-center gap-1.5 text-[11px] font-bold text-slate-400 transition-colors hover:text-emerald-600">
+                    <i class="fa-solid fa-arrow-left text-[10px]"></i> Kembali ke Katalog Utama
                 </a>
             </div>
-        </form>
 
-    </div>
+        </div>
 
-</body>
+    </body>
+
 </html>

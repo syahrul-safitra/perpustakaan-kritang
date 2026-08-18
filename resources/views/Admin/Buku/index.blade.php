@@ -1,9 +1,9 @@
-@extends('Admin.Layouts.main')
+{{-- @extends('Admin.Layouts.main')
 
-@section('title', 'Koleksi Buku - Admin Perpustakaan')
-@section('breadcrumb_active', 'Data Koleksi Buku')
+@section("title", "Koleksi Buku - Admin Perpustakaan")
+@section("breadcrumb_active", "Data Koleksi Buku")
 
-@section('content')
+@section("content")
 <!-- Page Header & Action Button -->
 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
     <div>
@@ -183,7 +183,7 @@
         </div>
 
         <!-- Pagination Footer -->
-        @if (isset($bukus) && method_exists($bukus, 'links'))
+        @if (isset($bukus) && method_exists($bukus, "links"))
             <div class="mt-6 pt-4 border-t border-base-200 flex items-center justify-between">
                 {{ $bukus->links() }}
             </div>
@@ -211,7 +211,7 @@
     </form>
 </dialog>
 
-@push('scripts')
+@push("scripts")
 <script>
     function confirmDelete(id, title) {
         const form = document.getElementById('delete_form');
@@ -226,4 +226,223 @@
     }
 </script>
 @endpush
+@endsection --}}
+
+@extends("Admin.Layouts.main")
+
+@section("title", "Koleksi Buku - E-Perpus SMAN 1 Keritang")
+@section("page_heading", "Kelola Koleksi Buku")
+
+@section("content")
+    <div class="space-y-6">
+
+        <!-- Header Action & Search Card (Light Emerald Style) -->
+        <div class="space-y-4 rounded-3xl border border-slate-100 bg-white p-5 shadow-sm">
+
+            <!-- Baris Atas: Judul & Tombol Tambah -->
+            <div class="flex flex-col justify-between gap-4 md:flex-row md:items-center">
+                <div>
+                    <h2 class="text-base font-bold text-slate-800">Daftar Koleksi Buku</h2>
+                    <p class="text-xs text-slate-400">Kelola katalog buku, stok eksemplar, lokasi rak, dan sampul buku</p>
+                </div>
+
+                <a href="{{ url("admin/buku/create") }}"
+                    class="btn btn-sm gap-2 self-start rounded-2xl border-none bg-emerald-600 px-4 text-xs font-bold text-white shadow-md shadow-emerald-600/20 hover:bg-emerald-700 md:self-auto">
+                    <i class="fa-solid fa-plus text-xs"></i> Tambah Buku Baru
+                </a>
+            </div>
+
+            <!-- Baris Bawah: Form Pencarian & Filter -->
+            <form method="GET" action="{{ url("/admin/buku") }}"
+                class="flex flex-col items-center justify-between gap-3 border-t border-slate-100 pt-3 md:flex-row">
+
+                <!-- Input Search Field -->
+                <div class="relative w-full md:w-80">
+                    <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+                        <i class="fa-solid fa-magnifying-glass text-xs"></i>
+                    </span>
+                    <input type="text" name="search" value="{{ request("search") }}"
+                        placeholder="Cari judul, ISBN, atau pengarang..."
+                        class="input input-sm input-bordered w-full rounded-xl border-slate-200 bg-slate-50 pl-9 text-xs text-slate-700 transition-all focus:border-emerald-500 focus:bg-white focus:outline-none" />
+                </div>
+
+                <!-- Filter Kategori & Stok -->
+                <div class="flex w-full items-center gap-2 md:w-auto">
+                    <select name="kategori_id"
+                        class="select select-sm select-bordered rounded-xl border-slate-200 bg-slate-50 text-xs text-slate-700 focus:border-emerald-500 focus:outline-none">
+                        <option value="">Semua Kategori</option>
+                        @foreach ($kategoris as $kat)
+                            <option value="{{ $kat->id }}" {{ request("kategori_id") == $kat->id ? "selected" : "" }}>
+                                {{ $kat->nama_kategori }}
+                            </option>
+                        @endforeach
+                    </select>
+
+                    <button type="submit"
+                        class="btn btn-sm gap-1.5 rounded-xl border border-slate-200 bg-slate-100 px-4 text-xs font-bold text-slate-700 transition-colors hover:bg-emerald-50 hover:text-emerald-600">
+                        <i class="fa-solid fa-filter text-[11px]"></i> Filter
+                    </button>
+
+                    @if (request("search") || request("kategori_id"))
+                        <a href="{{ url("/admin/buku") }}"
+                            class="btn btn-sm btn-ghost rounded-xl px-2 text-xs font-semibold text-rose-500 hover:bg-rose-50"
+                            title="Reset Filter">
+                            <i class="fa-solid fa-rotate-right"></i> Reset
+                        </a>
+                    @endif
+                </div>
+
+            </form>
+        </div>
+
+        <!-- Table Data Container -->
+        <div class="overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-sm">
+            <div class="flex items-center justify-between border-b border-slate-100 p-5">
+                <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Total Koleksi:
+                    {{ $bukus->total() ?? count($bukus) }}</span>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse text-left text-xs">
+                    <thead>
+                        <tr
+                            class="border-b border-slate-100 bg-slate-50/70 text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                            <th class="w-12 px-4 py-3.5">No</th>
+                            <th class="px-4 py-3.5">Buku & ISBN</th>
+                            <th class="px-4 py-3.5">Kategori</th>
+                            <th class="px-4 py-3.5">Pengarang / Penerbit</th>
+                            <th class="px-4 py-3.5">Rak</th>
+                            <th class="px-4 py-3.5 text-center">Stok Available</th>
+                            <th class="w-28 px-4 py-3.5 text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 font-medium text-slate-700">
+                        @forelse($bukus as $index => $item)
+                            <tr class="transition-colors hover:bg-slate-50/80">
+                                <td class="px-4 py-3.5 font-mono text-slate-400">
+                                    {{ $bukus->firstItem() + $index }}
+                                </td>
+                                <td class="px-4 py-3.5">
+                                    <div class="flex items-center gap-3">
+                                        <div
+                                            class="flex h-12 w-9 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-slate-200 bg-slate-100 shadow-sm">
+                                            @if ($item->cover)
+                                                <img src="{{ asset("uploads/buku/" . $item->cover) }}"
+                                                    alt="{{ $item->judul }}" class="h-full w-full object-cover">
+                                            @else
+                                                <i class="fa-solid fa-book text-base text-slate-300"></i>
+                                            @endif
+                                        </div>
+                                        <div>
+                                            <div class="line-clamp-1 font-bold text-slate-800">{{ $item->judul }}</div>
+                                            <div class="font-mono text-[10px] text-slate-400">ISBN:
+                                                {{ $item->isbn ?? "-" }}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-4 py-3.5">
+                                    <span
+                                        class="inline-flex items-center rounded-full border border-emerald-200/60 bg-emerald-50 px-2.5 py-0.5 text-[10px] font-bold text-emerald-700">
+                                        {{ $item->kategori->nama_kategori ?? "Umum" }}
+                                    </span>
+                                </td>
+                                <td class="px-4 py-3.5">
+                                    <div class="font-medium text-slate-800">{{ $item->pengarang }}</div>
+                                    <div class="text-[10px] text-slate-400">{{ $item->penerbit }}
+                                        ({{ $item->tahun_terbit }})
+                                    </div>
+                                </td>
+                                <td class="px-4 py-3.5 font-mono text-slate-600">
+                                    {{ $item->lokasi_rak ?? "-" }}
+                                </td>
+                                <td class="px-4 py-3.5 text-center">
+                                    @if ($item->stok > 0)
+                                        <span
+                                            class="inline-flex items-center gap-1 rounded-full border border-emerald-200/60 bg-emerald-50 px-2.5 py-0.5 text-[10px] font-bold text-emerald-700">
+                                            <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                                            {{ $item->stok }} Buku
+                                        </span>
+                                    @else
+                                        <span
+                                            class="inline-flex items-center gap-1 rounded-full border border-rose-200/60 bg-rose-50 px-2.5 py-0.5 text-[10px] font-bold text-rose-700">
+                                            <span class="h-1.5 w-1.5 rounded-full bg-rose-500"></span> Habis
+                                        </span>
+                                    @endif
+                                </td>
+                                <td class="px-4 py-3.5 text-center">
+                                    <div class="flex items-center justify-center gap-1.5">
+                                        <!-- Link Ke Halaman Edit Terpisah -->
+                                        <a href="{{ url("admin/buku/" . $item->id . "/edit") }}"
+                                            class="btn btn-xs btn-square flex items-center justify-center rounded-xl border-none bg-slate-100 text-slate-600 transition-colors hover:bg-emerald-50 hover:text-emerald-600"
+                                            title="Edit Data">
+                                            <i class="fa-solid fa-pen-to-square text-xs"></i>
+                                        </a>
+
+                                        <!-- Tombol Pemicu Modal Hapus -->
+                                        <button
+                                            onclick="confirmDelete({{ $item->id }}, '{{ addslashes($item->judul) }}')"
+                                            class="btn btn-xs btn-square rounded-xl border-none bg-slate-100 text-slate-600 transition-colors hover:bg-rose-50 hover:text-rose-600"
+                                            title="Hapus Data">
+                                            <i class="fa-solid fa-trash text-xs"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="7" class="py-12 text-center italic text-slate-400">
+                                    Belum ada data buku yang tersedia.
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+
+            @if ($bukus->hasPages())
+                <div class="border-t border-slate-100 p-4">
+                    {{ $bukus->links() }}
+                </div>
+            @endif
+        </div>
+
+    </div>
+
+    <!-- Modal Konfirmasi Hapus Buku -->
+    <dialog id="delete_modal" class="modal modal-bottom sm:modal-middle">
+        <div class="modal-box w-11/12 max-w-md rounded-3xl border border-slate-100 bg-white p-6 text-center shadow-2xl">
+            <div
+                class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-rose-50 text-xl text-rose-500">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 class="text-base font-bold text-slate-800">Konfirmasi Hapus Data</h3>
+            <p class="mt-2 text-xs text-slate-500">
+                Apakah Anda yakin ingin menghapus buku <span id="delete_buku_title"
+                    class="font-bold text-slate-800"></span>? Data yang terhapus tidak dapat dikembalikan.
+            </p>
+
+            <form id="delete_form" method="POST" class="mt-6">
+                @csrf
+                @method("DELETE")
+                <div class="flex items-center justify-center gap-3">
+                    <button type="button" onclick="delete_modal.close()"
+                        class="btn btn-ghost btn-sm w-1/2 rounded-xl text-xs text-slate-500">Batal</button>
+                    <button type="submit"
+                        class="btn btn-sm w-1/2 rounded-xl border-none bg-rose-600 text-xs font-bold text-white shadow-md shadow-rose-600/20 hover:bg-rose-700">Hapus
+                        Sekarang</button>
+                </div>
+            </form>
+        </div>
+        <form method="dialog" class="modal-backdrop"><button>close</button></form>
+    </dialog>
+
+    @push("scripts")
+        <script>
+            function confirmDelete(id, judul) {
+                document.getElementById('delete_form').action = `/admin/buku/${id}`;
+                document.getElementById('delete_buku_title').innerText = `"${judul}"`;
+                document.getElementById('delete_modal').showModal();
+            }
+        </script>
+    @endpush
 @endsection

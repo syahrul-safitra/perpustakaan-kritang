@@ -28,6 +28,22 @@ class LaporanController extends Controller
     /**
      * Generate file PDF menggunakan DomPDF v3.1
      */
+    // public function cetakPdf(Request $request)
+    // {
+    //     $query = Peminjaman::with(['anggota', 'detailPeminjaman.buku']);
+
+    //     if ($request->filled('tanggal_mulai') && $request->filled('tanggal_selesai')) {
+    //         $query->whereBetween('tanggal_pinjam', [$request->tanggal_mulai, $request->tanggal_selesai]);
+    //     }
+
+    //     $peminjamans = $query->latest()->get();
+
+    //     $pdf = Pdf::loadView('Admin.Laporan.pdf', compact('peminjamans'))
+    //               ->setPaper('a4', 'landscape');
+
+    //     return $pdf->stream('Laporan-Sirkulasi-Perpustakaan.pdf');
+    // }
+
     public function cetakPdf(Request $request)
     {
         $query = Peminjaman::with(['anggota', 'detailPeminjaman.buku']);
@@ -38,8 +54,13 @@ class LaporanController extends Controller
 
         $peminjamans = $query->latest()->get();
 
-        $pdf = Pdf::loadView('Admin.Laporan.pdf', compact('peminjamans'))
-                  ->setPaper('a4', 'landscape');
+        // Data pendukung laporan
+        $tglMulai = $request->tanggal_mulai;
+        $tglSelesai = $request->tanggal_selesai;
+        $totalDenda = $peminjamans->sum('total_denda');
+
+        $pdf = Pdf::loadView('Admin.Laporan.pdf', compact('peminjamans', 'tglMulai', 'tglSelesai', 'totalDenda'))
+                ->setPaper('a4', 'landscape');
 
         return $pdf->stream('Laporan-Sirkulasi-Perpustakaan.pdf');
     }

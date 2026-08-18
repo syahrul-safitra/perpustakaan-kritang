@@ -53,11 +53,11 @@ class PeminjamanController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'anggota_id'            => 'required|exists:anggotas,id',
+            'anggota_id'            => 'required|exists:anggota,id',
             'tanggal_pinjam'        => 'required|date',
             'tanggal_harus_kembali' => 'required|date|after_or_equal:tanggal_pinjam',
             'buku_id'               => 'required|array|min:1',
-            'buku_id.*'             => 'required|exists:bukus,id',
+            'buku_id.*'             => 'required|exists:buku,id',
         ], [
             'anggota_id.required' => 'Pilih anggota terlebih dahulu.',
             'buku_id.required'    => 'Pilih minimal satu buku untuk dipinjam.',
@@ -81,7 +81,7 @@ class PeminjamanController extends Controller
                 'anggota_id'            => $request->anggota_id,
                 // Gunakan auth()->id() jika fitur login sudah jalan. 
                 // Jika belum jalan/masih testing, gunakan fallback ke ID 1.
-                'user_id'               => auth()->id() ?? 1, 
+                'pustakawan_id'               => auth()->id() ?? 1, 
                 'tanggal_pinjam'        => $request->tanggal_pinjam,
                 'tanggal_harus_kembali' => $request->tanggal_harus_kembali,
                 'status'                => 'dipinjam',
