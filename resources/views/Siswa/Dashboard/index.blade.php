@@ -22,19 +22,17 @@
             <div class="navbar mx-auto flex max-w-7xl items-center justify-between px-4 md:px-6">
 
                 <!-- Brand Logo ZC -->
-                <div class="flex-1">
-                    <a href="{{ url("/anggota/dashboard") }}" class="group flex items-center gap-3">
-                        <div
-                            class="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-700 text-sm font-black tracking-wider text-white shadow-md shadow-emerald-600/25 transition-all duration-300 group-hover:scale-105">
-                            ZC
-                        </div>
-                        <div class="flex flex-col">
-                            <span
-                                class="text-sm font-black leading-none tracking-tight text-slate-800 transition-colors group-hover:text-emerald-600">PORTAL
-                                ANGGOTA</span>
-                            <span class="mt-0.5 text-[10px] font-semibold text-slate-400">SMAN 1 Keritang</span>
-                        </div>
-                    </a>
+                <!-- Brand Logo (E-Perpus SMAN 1 Keritang) -->
+                <div class="mb-10 mt-2 flex items-center gap-3 px-4">
+                    <div
+                        class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-slate-100 bg-white p-1.5 shadow-md shadow-emerald-600/10">
+                        <img src="{{ asset("img/logo.png") }}" alt="Logo SMAN 1 Keritang"
+                            class="h-full w-full object-contain" />
+                    </div>
+                    <div class="flex flex-col">
+                        <h1 class="text-lg font-black leading-tight tracking-tight text-slate-800">E-PERPUS</h1>
+                        <p class="text-[9px] font-bold uppercase tracking-wider text-emerald-600">SMAN 1 Keritang</p>
+                    </div>
                 </div>
 
                 <!-- Navbar Actions & Profile Dropdown -->

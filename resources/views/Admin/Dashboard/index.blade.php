@@ -69,7 +69,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Sedang Dipinjam</p>
-                        <h3 class="mt-1 text-2xl font-black text-slate-800">{{ $totalPinjamAktif ?? 0 }}</h3>
+                        <h3 class="mt-1 text-2xl font-black text-slate-800">{{ $totalDipinjam ?? 0 }}</h3>
                     </div>
                     <div
                         class="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-50 text-amber-600 shadow-sm">
@@ -87,7 +87,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Pengembalian Selesai</p>
-                        <h3 class="mt-1 text-2xl font-black text-slate-800">{{ $totalDikembalikan ?? 0 }}</h3>
+                        <h3 class="mt-1 text-2xl font-black text-slate-800">{{ $totalPengembalian ?? 0 }}</h3>
                     </div>
                     <div
                         class="flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-50 text-purple-600 shadow-sm">

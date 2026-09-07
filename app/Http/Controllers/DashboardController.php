@@ -17,6 +17,8 @@ class DashboardController extends Controller
         $totalKoleksi   = Buku::count();
         $totalAnggota   = Anggota::where('status_aktif', 'aktif')->count();
         $totalDipinjam  = Peminjaman::where('status', 'dipinjam')->count();
+        $totalPengembalian = Peminjaman::where('status', 'dikembalikan')->count();
+
 
         // 2. Data Tabel: 5 Peminjaman Terbaru yang Belum Kembali
         $peminjamanTerbaru = Peminjaman::with(['anggota', 'detailPeminjaman.buku'])
@@ -34,7 +36,8 @@ class DashboardController extends Controller
             'totalAnggota', 
             'totalDipinjam', 
             'peminjamanTerbaru',
-            'kategoris'
+            'kategoris',
+            'totalPengembalian'
         ));
     }
 }

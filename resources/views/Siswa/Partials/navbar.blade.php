@@ -5,8 +5,9 @@
         <div class="flex-1 gap-3">
             <a href="{{ url("/katalog") }}" class="group flex items-center gap-2.5">
                 <div
-                    class="flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-600 text-sm font-black tracking-wider text-white shadow-md shadow-emerald-600/20 transition-transform group-hover:scale-105">
-                    ZC
+                    class="flex h-10 w-10 items-center justify-center overflow-hidden rounded-2xl border border-emerald-100 bg-emerald-50 p-1 shadow-md shadow-emerald-600/10 transition-transform group-hover:scale-105">
+                    <img src="{{ asset("img/logo.png") }}" alt="Logo Tut Wuri Handayani"
+                        class="h-full w-full object-contain" />
                 </div>
                 <div class="flex flex-col">
                     <span

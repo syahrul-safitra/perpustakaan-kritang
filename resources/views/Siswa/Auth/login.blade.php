@@ -36,12 +36,13 @@
         <div
             class="relative z-10 w-full max-w-md space-y-6 rounded-3xl border border-white/40 bg-white/95 p-6 shadow-2xl shadow-emerald-950/60 backdrop-blur-2xl sm:p-8">
 
-            <!-- Header Branding (Zen Code & Info Sekolah) -->
+            <!-- Header Branding (Info Sekolah & Logo Resmi) -->
             <div class="text-center">
                 <a href="{{ url("/katalog") }}" class="group mb-3 inline-flex items-center gap-2.5">
                     <div
-                        class="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-700 text-base font-black tracking-wider text-white shadow-lg shadow-emerald-600/30 transition-transform group-hover:scale-105">
-                        ZC
+                        class="flex h-14 w-14 items-center justify-center rounded-2xl border border-slate-100/80 bg-white/80 p-1.5 shadow-lg shadow-emerald-950/20 backdrop-blur-md transition-transform group-hover:scale-105">
+                        <img src="{{ asset("img/logo.png") }}" alt="Logo SMAN 1 Keritang"
+                            class="h-full w-full object-contain" />
                     </div>
                 </a>
                 <h1 class="text-xl font-black tracking-tight text-slate-800">Portal Anggota</h1>

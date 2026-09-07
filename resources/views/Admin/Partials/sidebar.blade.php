@@ -3,11 +3,12 @@
     <aside
         class="menu flex min-h-full w-72 flex-col justify-between border-r border-slate-100 bg-white p-6 text-slate-600">
         <div>
-            <!-- Brand Logo (Zen Code / E-Perpus Light) -->
+            <!-- Brand Logo (E-Perpus SMAN 1 Keritang) -->
             <div class="mb-10 mt-2 flex items-center gap-3 px-4">
                 <div
-                    class="flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-500 text-lg font-black tracking-wider text-white shadow-lg shadow-emerald-500/30">
-                    ZC
+                    class="flex h-10 w-10 items-center justify-center rounded-2xl border border-emerald-100 bg-emerald-50 p-1 shadow-md shadow-emerald-500/10">
+                    <img src="{{ asset("img/logo.png") }}" alt="Logo SMAN 1 Keritang"
+                        class="h-full w-full object-contain" />
                 </div>
                 <div>
                     <h1 class="text-xl font-black tracking-tight text-slate-800">E-PERPUS</h1>
